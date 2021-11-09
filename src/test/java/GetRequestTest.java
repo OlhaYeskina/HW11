@@ -10,9 +10,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import javax.swing.*;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
@@ -67,34 +65,30 @@ public class GetRequestTest {
         System.out.println(userId2);
         int id2 = JsonPath.read(doc, "$.[1].id");
         System.out.println(id2);
-//        String title2 = JsonPath.read(doc, "$.[2].title");
-//        String body2 = JsonPath.read(doc, "$.[2].title");
 
-
-
-//        given().header("Content-Type", "application/json")
-//                .when()
-//                .get(BASE_URI + "/posts")
-//                .then()
-//                .assertThat()
-//                .statusCode(200)
-//                .body(String.valueOf(userId2), equalTo(1)).log().all();
-             //   .body(id2, equalTo(jsonAsMap.get("id")))
-//                .body(title2, equalTo(jsonAsMap1.get("title")))
-//                .body(body2, equalTo(jsonAsMap1.get("body"))).log().all();
-//        System.out.println(resp);
         Assert.assertEquals(userId2, jsonAsMap1.get("userId"));
         Assert.assertEquals(id2, jsonAsMap1.get("id"));
 
+    }
 
 
+    @Test
+    public void getAllPostsTest() {
+        int numberOfPostExpected = 100;
+        Response response = given()
+                .header("Content-Type", "application/json")
+                .when()
+                .get(BASE_URI + "/posts");
+        List<PostExample> postList = Arrays.asList(response.getBody().as(PostExample[].class));
+        int numberOfPostActual = postList.size();
+        Assert.assertEquals(numberOfPostExpected,numberOfPostActual);
 
-
-//        System.out.println(response);
-//                .assertThat()
-//                .body("userId", equalTo(JsonPath.read()))
-//                .log().all();
-
+//PostExample post = given()
+//                .header("Content-Type", "application/json")
+//                .when()
+//                .get(BASE_URI + "/posts")
+//                .getBody()
+//                .as(PostExample.class);
 
     }
 

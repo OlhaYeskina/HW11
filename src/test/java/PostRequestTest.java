@@ -12,6 +12,8 @@ public class PostRequestTest {
     public static final String BASE_URI = "http://jsonplaceholder.typicode.com";
     public static Map<String, Object> jsonAsMap = new HashMap<>();
 
+
+
     @BeforeTest
     public void prepareForNewPostsTest() {
         jsonAsMap.put("userId", 1);
@@ -33,5 +35,9 @@ public class PostRequestTest {
                 .body("title", equalTo(jsonAsMap.get("title")))
                 .body("body", equalTo(jsonAsMap.get("body"))).log().all();
     }
+
+
+
+
 }
 
